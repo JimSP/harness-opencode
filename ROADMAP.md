@@ -344,11 +344,11 @@ Atual] ao concluir.
 ### Fase B — Estado + Gates Básicos (fases 1-3)
 **Saída**: ciclo EARS→BDD→tests governado fim-a-fim sem impl.
 - [x] B.1 `state.py`: `new/show/advance/regress` (CRUD atômico).
-- [ ] B.2 `gates/ears.py` (parser EARS).
+- [x] B.2 `gates/ears.py` (parser EARS).
 - [ ] B.3 `gates/gherkin.py`.
 - [ ] B.4 `gates/aaa.py` (árbore Python primeiro; Java/Rust depois).
-- [ ] B.5 `gate` CLI integrando gates + avançando estado.
-- [ ] B.6 `ehq_gate.ts` custom tool.
+- [x] B.5 `gate` CLI integrando gates + avançando estado. (parcial: gate ears; outros vêm c/ B.3/B.4)
+- [x] B.6 `ehq_gate.ts` custom tool.
 - [ ] B.7 Tests end-to-end em `examples/python_feature/`.
 
 ### Fase C — Agent orquestrador skeleton + Rules
@@ -406,13 +406,14 @@ Atual] ao concluir.
 
 > ÚNICA fonte de verdade de progresso. Atualize a **cada** conclusão de item.
 
-- **Fase atual**: Fase A COMPLETA (A.1-A.8); pronto p/ iniciar Fase B.2 (parser EARS).
+- **Fase atual**: Fase B.3 (gherkin) pendente; A COMPLETA + B.1/B.2/B.5-parcial/B.6 feitos.
 - **Decisões técnicas travadas**: §4 desta doc.
 - **Documentação opencode confirmada**: custom-tools, agents, rules ✓.
 - **Mapeamento de libs**: §9 ✓ (multi-lang, disponibilidade verificada).
-- **Testes**: 19/19 verdes (workspace/project/state + smoke CLI).
-- **Custom tools**: 2 TS instalados e validados end-to-end via bun (E2E OK).
-- **Próxima ação sugerida**: B.2 — `gates/ears.py` (parser EARS real) para tornar `gate ears` funcional.
+- **Testes**: 36/36 verdes (workspace/project/state + gate ears + E2E runner).
+- **Custom tools**: 3 TS (workspace, state, gate) instalados e versionados.
+- **Fluxo demonstrado**: add→new→gate ears(Fail)→reescreve req→gate ears(Pass)→advance→phase=bdd.
+- **Próxima ação sugerida**: B.3 — `gates/gherkin.py` (parser Gherkin + tag @req) p/ fase `bdd`.
 
 ## 12. Pontos em Aberto (Decisões Adiadas)
 

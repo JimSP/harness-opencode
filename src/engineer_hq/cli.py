@@ -23,7 +23,8 @@ from . import __version__
 from . import workspace as ws_mod
 from . import project as proj_mod
 from . import state as state_mod
-from .schema import EhqError, roadmap_path, workspace_config_path
+from . import gate_runner
+from .schema import EhqError, roadmap_path, workspace_config_path, project_paths
 
 app = typer.Typer(
     name="ehq",
@@ -36,10 +37,12 @@ app = typer.Typer(
 state_app = typer.Typer(help="Gestão do state.json por projeto (features).")
 project_app = typer.Typer(help="Gestão de projetos no workspace.")
 workspace_app = typer.Typer(help="Visão agregada do workspace.")
+gate_app = typer.Typer(help="Executa gates de validação de fase.")
 
 app.add_typer(project_app, name="project")
 app.add_typer(workspace_app, name="workspace")
 app.add_typer(state_app, name="state")
+app.add_typer(gate_app, name="gate")
 
 err_console = Console(stderr=True)
 out_console = Console()
@@ -289,6 +292,19 @@ def _count_features(project_root: Path) -> int:
         return len(json.loads(state_path.read_text(encoding="utf-8")).get("features", {}))
     except Exception:
         return 0
+
+
+# ---- gate -------------------------------------------------------------------
+
+
+@gate_app.command("ears")
+def gate_ears(feature_id: Annotated[str, typer.Argument()]) -> None:
+    """Valida o .req.md da feature no padrão EARS + DoD."""
+    try:
+        ws = ws_mod.load_workspace()
+        _emit(gate_runner.run_gate(ws, gate_name="ears", feature_id=feature_id))
+    except EhqError as exc:
+        _handle_error(exc)
 
 
 if __name__ == "__main__":
