@@ -332,18 +332,18 @@ Atual] ao concluir.
 
 ### Fase A — Bootstrap CLI + Contexto
 **Saída**: CLI `ehq` instalável; `workspace.toml` funcional; 2 custom tools.
-- [x] A.1 Repo `~/work/harness-opencode` inicializado; `pyproject.toml` (uv/PEP621); `ehq` entrypoint. (repo criado no GitHub; clone/init de pyproject pendente)
-- [ ] A.2 `cli.py` (Typer) dispatcher vazio p/ `project`/`workspace`/`state`/`gate`.
-- [ ] A.3 `workspace.py`: lê/cria `~/.config/engineer-hq/workspace.toml`.
-- [ ] A.4 `project.py`: `add/list/use/info`; valida path acessível.
-- [ ] A.5 Geração de `.engineer-hq.toml` padrão + `state.json` vazio no projeto.
-- [ ] A.6 `workspace status` (visão agregada: projetos + last-gate).
+- [x] A.1 Repo `~/work/harness-opencode` inicializado; `pyproject.toml` (uv/PEP621); `ehq` entrypoint.
+- [x] A.2 `cli.py` (Typer) dispatcher vazio p/ `project`/`workspace`/`state`/`gate`.
+- [x] A.3 `workspace.py`: lê/cria `~/.config/engineer-hq/workspace.toml`.
+- [x] A.4 `project.py`: `add/list/use/info`; valida path acessível.
+- [x] A.5 Geração de `.engineer-hq.toml` + `state.json` vazio no projeto.
+- [x] A.6 `workspace status` (visão agregada: projetos + last-gate).
 - [ ] A.7 Custom tools `ehq_workspace.ts` + `ehq_state.ts` (show).
-- [ ] A.8 Tests: pytest p/ workspace/project; smoke CLI.
+- [x] A.8 Tests: pytest p/ workspace/project; smoke CLI. (19/19 verdes)
 
 ### Fase B — Estado + Gates Básicos (fases 1-3)
 **Saída**: ciclo EARS→BDD→tests governado fim-a-fim sem impl.
-- [ ] B.1 `state.py`: `new/show/advance/regress` (CRUD atômico).
+- [x] B.1 `state.py`: `new/show/advance/regress` (CRUD atômico).
 - [ ] B.2 `gates/ears.py` (parser EARS).
 - [ ] B.3 `gates/gherkin.py`.
 - [ ] B.4 `gates/aaa.py` (árbore Python primeiro; Java/Rust depois).
@@ -406,11 +406,13 @@ Atual] ao concluir.
 
 > ÚNICA fonte de verdade de progresso. Atualize a **cada** conclusão de item.
 
-- **Fase atual**: Pré-Fase A (planejamento concluído; nenhum código ainda).
+- **Fase atual**: Fase A.7 pendente (custom tools TS); A.2-A.6,A.8 + B.1 completos.
 - **Decisões técnicas travadas**: §4 desta doc.
 - **Documentação opencode confirmada**: custom-tools, agents, rules ✓.
 - **Mapeamento de libs**: §9 ✓ (multi-lang, disponibilidade verificada).
-- **Próxima ação sugerida**: Fase A.1 — criar repo `~/work/engineer-hq`.
+- **Testes**: 19/19 verdes (workspace/project/state + smoke CLI).
+- **CLI demonstrada**: add→info→new→show→advance(recusa sem gate)→regress(com diagnose JSON).
+- **Próxima ação sugerida**: A.7 (ehq_workspace.ts + ehq_state.ts) ou partir B.2 (parser EARS).
 
 ## 12. Pontos em Aberto (Decisões Adiadas)
 
