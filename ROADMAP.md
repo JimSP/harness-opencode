@@ -338,7 +338,7 @@ Atual] ao concluir.
 - [x] A.4 `project.py`: `add/list/use/info`; valida path acessível.
 - [x] A.5 Geração de `.engineer-hq.toml` + `state.json` vazio no projeto.
 - [x] A.6 `workspace status` (visão agregada: projetos + last-gate).
-- [ ] A.7 Custom tools `ehq_workspace.ts` + `ehq_state.ts` (show).
+- [x] A.7 Custom tools `ehq_workspace.ts` + `ehq_state.ts` (show). (instalados em ~/.config/opencode/tools/; versionados em opencode-config/tools/; E2E validado via bun)
 - [x] A.8 Tests: pytest p/ workspace/project; smoke CLI. (19/19 verdes)
 
 ### Fase B — Estado + Gates Básicos (fases 1-3)
@@ -406,13 +406,13 @@ Atual] ao concluir.
 
 > ÚNICA fonte de verdade de progresso. Atualize a **cada** conclusão de item.
 
-- **Fase atual**: Fase A.7 pendente (custom tools TS); A.2-A.6,A.8 + B.1 completos.
+- **Fase atual**: Fase A COMPLETA (A.1-A.8); pronto p/ iniciar Fase B.2 (parser EARS).
 - **Decisões técnicas travadas**: §4 desta doc.
 - **Documentação opencode confirmada**: custom-tools, agents, rules ✓.
 - **Mapeamento de libs**: §9 ✓ (multi-lang, disponibilidade verificada).
 - **Testes**: 19/19 verdes (workspace/project/state + smoke CLI).
-- **CLI demonstrada**: add→info→new→show→advance(recusa sem gate)→regress(com diagnose JSON).
-- **Próxima ação sugerida**: A.7 (ehq_workspace.ts + ehq_state.ts) ou partir B.2 (parser EARS).
+- **Custom tools**: 2 TS instalados e validados end-to-end via bun (E2E OK).
+- **Próxima ação sugerida**: B.2 — `gates/ears.py` (parser EARS real) para tornar `gate ears` funcional.
 
 ## 12. Pontos em Aberto (Decisões Adiadas)
 
