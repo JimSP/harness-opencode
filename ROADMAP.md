@@ -345,11 +345,11 @@ Atual] ao concluir.
 **Saída**: ciclo EARS→BDD→tests governado fim-a-fim sem impl.
 - [x] B.1 `state.py`: `new/show/advance/regress` (CRUD atômico).
 - [x] B.2 `gates/ears.py` (parser EARS).
-- [ ] B.3 `gates/gherkin.py`.
+- [x] B.3 `gates/gherkin.py` (parser Gherkin via gherkin-official; tag @req + outline).
 - [ ] B.4 `gates/aaa.py` (árbore Python primeiro; Java/Rust depois).
-- [x] B.5 `gate` CLI integrando gates + avançando estado. (parcial: gate ears; outros vêm c/ B.3/B.4)
-- [x] B.6 `ehq_gate.ts` custom tool.
-- [ ] B.7 Tests end-to-end em `examples/python_feature/`.
+- [x] B.5 `gate` CLI integrando gates + avançando estado. (ears + gherkin; + state set-artifact)
+- [x] B.6 `ehq_gate.ts` custom tool. (+ ehq_artifact.ts)
+- [ ] B.7 Tests end-to-end em `examples/python_feature/`. (50/50 unit/E2E; examples/ pendente)
 
 ### Fase C — Agent orquestrador skeleton + Rules
 **Saída**: primário `ehq-flow` despachando via placeholders; imposição mostra.
@@ -406,19 +406,20 @@ Atual] ao concluir.
 
 > ÚNICA fonte de verdade de progresso. Atualize a **cada** conclusão de item.
 
-- **Fase atual**: Fase B.3 (gherkin) pendente; A COMPLETA + B.1/B.2/B.5-parcial/B.6 feitos.
+- **Fase atual**: Fase B.4 (aaa) pendente; A COMPLETA + B.1/B.2/B.3/B.5/B.6 feitos.
 - **Decisões técnicas travadas**: §4 desta doc.
 - **Documentação opencode confirmada**: custom-tools, agents, rules ✓.
 - **Mapeamento de libs**: §9 ✓ (multi-lang, disponibilidade verificada).
-- **Testes**: 36/36 verdes (workspace/project/state + gate ears + E2E runner).
-- **Custom tools**: 3 TS (workspace, state, gate) instalados e versionados.
-- **Fluxo demonstrado**: add→new→gate ears(Fail)→reescreve req→gate ears(Pass)→advance→phase=bdd.
-- **Próxima ação sugerida**: B.3 — `gates/gherkin.py` (parser Gherkin + tag @req) p/ fase `bdd`.
+- **Testes**: 50/50 verdes (workspace/project/state + ears + gherkin + E2E runner).
+- **Custom tools**: 4 TS (workspace, state, gate, artifact) instalados e versionados.
+- **Fluxo demonstrado E2E**: add → new → gate ears (fail) → reescreve req → gate ears (pass) → advance (→bdd) → gate gherkin (fail sem feature) → escreve .feature → set-artifact → gate gherkin (pass) → advance (→tests). Gates persistidos em state.json.
+- **Convenção**: módulos gate em engine_hq/gates/*_gate.py (suffix _gate) para evitar shadow de pacotes upstream (caso gherkin/ears).
+- **Próxima ação sugerida**: B.4 — `gates/aaa_gate.py` (parser AAA, Python primeiro via `ast` módulo stdlib).
 
 ## 12. Pontos em Aberto (Decisões Adiadas)
 
 - [x] Path do repo `harness-opencode` (resolvido: `~/work/harness-opencode`, repo GitHub JimSP/harness-opencode).
-- [ ] Parser Gherkin Python exato (`gherkin-official` vs `cucumber-expressions`).
+- [x] Parser Gherkin Python exato (resolvido: `gherkin-official` 42.0.0; parser canônico Cucumber; aceita # language: pt).
 - [ ] Estratégia de snapshot de métricas para `gate.refactor` (SQLite vs JSON).
 - [ ] Modelo LLM default p/ cada agent (default opencode vs per-agent).
 - [ ] Versão do copier e pragma update nos templates (semáforo release).

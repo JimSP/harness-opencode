@@ -28,6 +28,7 @@ dependencies = [
     "rich>=13.7",
     "tomli-w>=1.0",
     "pydantic>=2.7",
+    "gherkin-official>=24",
 ]
 
 [project.optional-dependencies]

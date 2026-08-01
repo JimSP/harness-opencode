@@ -235,3 +235,50 @@ def regress_feature(
         "to": to,
         "diagnose": diagnose,
     }
+
+
+def set_artifact(
+    ws,
+    feature_id: str,
+    *,
+    kind: str,
+    path: str,
+) -> dict[str, Any]:
+    """Anexa um artefato a uma feature (usado por subagents ao produzir .feature/.testes/.impl).
+
+    ``kind`` deve ser 'feature' | 'test' | 'impl' | 'req'.
+    Para 'test'/'impl' (listas), path é adicionado à lista (dedup).
+    """
+    pid, root = _require_active(ws)
+    st, state_path = _load_state(root)
+    if feature_id not in st.features:
+        raise EhqError(f"feature inexistente: {feature_id}", missing=list(st.features.keys()))
+    fs = st.features[feature_id]
+    artifacts = fs.artifacts
+    from datetime import datetime
+
+    changed: str = ""
+    if kind == "req":
+        artifacts.req = path
+        changed = "req"
+    elif kind == "feature":
+        artifacts.feature = path
+        changed = "feature"
+    elif kind == "test":
+        if path not in artifacts.tests:
+            artifacts.tests.append(path)
+        changed = "test"
+    elif kind == "impl":
+        if path not in artifacts.impl:
+            artifacts.impl.append(path)
+        changed = "impl"
+    else:
+        raise EhqError(f"kind inválido: {kind}", missing=["req", "feature", "test", "impl"])
+    fs.updated_at = datetime.now().astimezone()
+    _save_state(state_path, st)
+    return {
+        "project_id": pid,
+        "feature_id": feature_id,
+        "artifact": changed,
+        "path": path,
+    }

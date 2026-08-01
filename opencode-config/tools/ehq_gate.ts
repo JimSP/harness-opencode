@@ -13,7 +13,7 @@ export default tool({
     "Gates disponíveis (fase atual): ears (requirements). Outros virão em fases posteriores.",
   args: {
     gate: tool.schema
-      .enum(["ears"])
+      .enum(["ears", "gherkin"])
       .describe("Nome do gate a executar."),
     feature_id: tool.schema
       .string()

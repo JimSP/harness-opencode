@@ -6,7 +6,7 @@ from textwrap import dedent
 
 import pytest
 
-from engineer_hq.gates import ears
+from engineer_hq.gates import ears_gate as ears
 
 
 def _write(tmp_path: Path, name: str, content: str) -> Path:

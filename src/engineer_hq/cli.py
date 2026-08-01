@@ -242,6 +242,20 @@ def state_regress(
         _handle_error(exc)
 
 
+@state_app.command("set-artifact")
+def state_set_artifact(
+    feature_id: Annotated[str, typer.Argument()],
+    kind: Annotated[str, typer.Option("--kind")],
+    path: Annotated[str, typer.Option("--path")],
+) -> None:
+    """Anexa um artefato (req/feature/test/impl) à feature no state.json."""
+    try:
+        ws = ws_mod.load_workspace()
+        _emit(state_mod.set_artifact(ws, feature_id, kind=kind, path=path))
+    except EhqError as exc:
+        _handle_error(exc)
+
+
 # ---- workspace --------------------------------------------------------------
 
 
@@ -303,6 +317,16 @@ def gate_ears(feature_id: Annotated[str, typer.Argument()]) -> None:
     try:
         ws = ws_mod.load_workspace()
         _emit(gate_runner.run_gate(ws, gate_name="ears", feature_id=feature_id))
+    except EhqError as exc:
+        _handle_error(exc)
+
+
+@gate_app.command("gherkin")
+def gate_gherkin(feature_id: Annotated[str, typer.Argument()]) -> None:
+    """Valida o .feature da feature (sintaxe + tag @req + outline)."""
+    try:
+        ws = ws_mod.load_workspace()
+        _emit(gate_runner.run_gate(ws, gate_name="gherkin", feature_id=feature_id))
     except EhqError as exc:
         _handle_error(exc)
 

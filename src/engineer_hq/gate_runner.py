@@ -14,7 +14,8 @@ from typing import Any
 from . import workspace as ws_mod
 from .schema import EhqError, GateRecord, ProjectState, project_paths
 from .gates.base import GateResult
-from .gates import ears as ears_gate
+from .gates import ears_gate as ears_gate
+from .gates import gherkin_gate
 
 
 def _require_active(ws) -> tuple[str, Path]:
@@ -63,7 +64,8 @@ def _gate_config(cfg: dict, gate_name: str) -> dict[str, Any]:
 
 _GATES_BY_PHASE = {
     "requirements": {"ears": ears_gate},
-    # fases futuras: bdd, tests, implementation, refactor, review
+    "bdd": {"gherkin": gherkin_gate},
+    # fases futuras: tests, implementation, refactor, review
 }
 
 
@@ -99,7 +101,7 @@ def run_gate(
             missing=["ear", "gherkin", "aaa", "redgreen", "refactor", "all"],
         )
 
-    # localiza artefato: gate ears lê o .req.md (artifacts.req)
+    # localiza artefato
     if gate_name == "ears":
         rel = fs.artifacts.req
         if not rel:
@@ -110,6 +112,16 @@ def run_gate(
             )
         artifact = root / rel
         result = impl.run(artifact, _gate_config(cfg, "ears"))
+    elif gate_name == "gherkin":
+        rel = fs.artifacts.feature
+        if not rel:
+            return _emit_error(
+                st, state_path, fs, gate_name, "GHERKIN_NO_FEATURE_ARTIFACT",
+                "feature sem .feature (artifacts.feature vazio). subagent ehq-bdd deve produzi-lo.",
+                persist,
+            )
+        artifact = root / rel
+        result = impl.run(artifact, _gate_config(cfg, "gherkin"))
     else:
         raise EhqError(f"gate '{gate_name}' não implementado ainda")
 
@@ -132,7 +144,16 @@ def run_gate(
     out = result.to_dict()
     out["project_id"] = pid
     out["feature_id"] = feature_id
-    out["next_phase_hint"] = "bdd" if (result.status == "pass" and fs.phase == "requirements") else None
+    if result.status == "pass":
+        fs_phase = fs.phase
+        if fs_phase == "requirements":
+            out["next_phase_hint"] = "bdd"
+        elif fs_phase == "bdd":
+            out["next_phase_hint"] = "tests"
+        else:
+            out["next_phase_hint"] = None
+    else:
+        out["next_phase_hint"] = None
     return out
 
 

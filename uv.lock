@@ -123,6 +123,7 @@ name = "engineer-hq"
 version = "0.0.1"
 source = { editable = "." }
 dependencies = [
+    { name = "gherkin-official" },
     { name = "pydantic" },
     { name = "rich" },
     { name = "tomli-w" },
@@ -137,6 +138,7 @@ test = [
 
 [package.metadata]
 requires-dist = [
+    { name = "gherkin-official", specifier = ">=24" },
     { name = "pydantic", specifier = ">=2.7" },
     { name = "pytest", marker = "extra == 'test'", specifier = ">=8.0" },
     { name = "pytest-cov", marker = "extra == 'test'", specifier = ">=5.0" },
@@ -145,6 +147,18 @@ requires-dist = [
     { name = "typer", specifier = ">=0.12" },
 ]
 provides-extras = ["test"]
+
+[[package]]
+name = "gherkin-official"
+version = "42.0.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b8/3d/ebe0670376750591a964080cc111b1720d54981379bb184656560687c3b9/gherkin_official-42.0.0.tar.gz", hash = "sha256:2ae52b6d510bfa78b70bde7ceb1f2afd59e28fa36c7ddbdacc96db2b65f5978f", size = 35273, upload-time = "2026-07-19T16:53:54.877Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/69/e6/10f0f4ef66fd4fbe49dbeee8087bb206b956d1b54cd208ffce1e3020d300/gherkin_official-42.0.0-py3-none-any.whl", hash = "sha256:7f95d926878bbfde2a0414683f88029b9dc7feba5a6c27ca26f2cf58edd482c4", size = 40038, upload-time = "2026-07-19T16:53:53.945Z" },
+]
 
 [[package]]
 name = "iniconfig"
